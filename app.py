@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, s
 import mysql.connector
 from mysql.connector import Error
 import re
+from pathlib import Path
 from functools import wraps
 
 try:
@@ -9,7 +10,15 @@ try:
 except ModuleNotFoundError:
     Config = None
 
-app = Flask(__name__, template_folder="template")
+BASE_DIR = Path(__file__).resolve().parent
+if (BASE_DIR / "template").is_dir():
+    TEMPLATE_DIR = BASE_DIR / "template"
+elif (BASE_DIR / "templates").is_dir():
+    TEMPLATE_DIR = BASE_DIR / "templates"
+else:
+    TEMPLATE_DIR = BASE_DIR / "template"
+
+app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
 if Config is not None:
     app.config.from_object(Config)

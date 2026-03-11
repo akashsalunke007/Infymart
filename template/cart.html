@@ -1,91 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Customer Cart</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InfyMart - Cart Summary</title>
     <style>
-        body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
-        .header { background: #0b2c6b; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .nav a { background: white; color: black; padding: 6px 16px; border-radius: 20px; text-decoration: none; margin-left: 10px; }
-        .main { min-height: 580px; background: linear-gradient(to bottom, #63c1c9, #8ed8de); padding: 20px; }
-        .box { background: #a9dfe3; border: 2px solid #333; border-radius: 10px; padding: 14px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
-        th, td { border: 1px solid #555; padding: 8px; text-align: left; }
-        th { background: #49afd9; }
-        .msg { color: #b00020; font-weight: bold; margin-bottom: 10px; }
-        button { background: black; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
-        .remove { background: #ff6f61; color: black; }
-        .total { font-weight: bold; margin: 8px 0; }
-        .footer { background: #0b2c6b; color: white; text-align: center; padding: 8px; }
+        :root {
+            --infy-dark-blue: #1a4b8c;
+            --infy-teal-bg: #4a9e9b;
+            --infy-card-blue: #003399;
+            --infy-nav-teal: #3ba39e;
+            --infy-accent-red: #cc4c3f;
+            --infy-banner-purple: #c084fc66;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--infy-teal-bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .header { background: var(--infy-dark-blue); color: white; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-size: 32px; font-weight: bold; font-style: italic; }
+        .actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .actions-row { display: flex; gap: 8px; }
+        .top-btn { background: white; color: #374151; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: bold; text-decoration: none; text-transform: uppercase; }
+        .banner-wrap { display: flex; justify-content: flex-end; padding-right: 16px; margin-top: 8px; }
+        .banner { background: var(--infy-banner-purple); padding: 4px 32px; border-radius: 3px; }
+        .main { flex: 1; padding: 40px 16px 16px; }
+        .msg { text-align: center; color: #fff1f1; font-weight: bold; margin-bottom: 14px; }
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+        .card { background: var(--infy-card-blue); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; box-shadow: 0 10px 24px rgba(0,0,0,0.25); padding: 28px 22px; }
+        .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+        .label { font-size: 22px; font-weight: bold; min-width: 145px; }
+        .value { background: white; color: #1f2937; border-radius: 999px; padding: 6px 14px; text-align: center; font-weight: 600; flex: 1; }
+        .remove-wrap { margin-top: 18px; text-align: center; }
+        .remove-btn { background: white; color: #1f2937; border: 1px solid #d1d5db; border-radius: 999px; padding: 7px 26px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .checkout { padding: 0 16px 22px; }
+        .checkout-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; }
+        .coupon-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .coupon-box { display: flex; align-items: center; background: white; color: #374151; border-radius: 4px; overflow: hidden; }
+        .coupon-box label { padding: 10px 12px; font-size: 12px; font-weight: bold; text-transform: uppercase; border-right: 1px solid #d1d5db; }
+        .coupon-box select { border: none; outline: none; padding: 10px 12px; min-width: 180px; }
+        .apply-btn { background: white; color: #374151; border: 1px solid #d1d5db; border-radius: 6px; padding: 10px 24px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .summary { width: 100%; max-width: 280px; display: flex; flex-direction: column; gap: 10px; }
+        .price-box { background: var(--infy-accent-red); color: white; border-radius: 6px; padding: 10px 14px; text-align: center; font-size: 24px; font-weight: bold; }
+        .place-btn { background: var(--infy-accent-red); color: white; border: none; border-radius: 6px; padding: 10px 14px; text-align: center; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .coupon-note { text-align: right; margin-top: 8px; font-size: 14px; color: #f5f5f5; }
+        .footer { background: var(--infy-dark-blue); color: white; text-align: center; padding: 6px; font-size: 12px; }
+        .empty-box { text-align: center; background: rgba(255,255,255,0.18); border-radius: 8px; padding: 16px; font-weight: bold; }
+        @media (max-width: 1024px) {
+            .cards { grid-template-columns: repeat(2, 1fr); }
+            .label, .price-box, .place-btn { font-size: 18px; }
+        }
+        @media (max-width: 768px) {
+            .header .container { flex-direction: column; gap: 12px; }
+            .actions { align-items: center; }
+            .cards { grid-template-columns: 1fr; }
+            .checkout-row { flex-direction: column; align-items: stretch; }
+            .summary { max-width: none; }
+            .coupon-note { text-align: left; }
+        }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <div>InfyMart - Cart</div>
-        <div class="nav">
-            <a href="/customer_home">Home</a>
-            <a href="/history">History</a>
-            <a href="/logout">Logout</a>
+    <header class="header">
+        <div class="container">
+            <h1 class="brand">InfyMart</h1>
+            <div class="actions">
+                <span>Hi {{ session.get('customer_name', 'Customer') }}</span>
+                <div class="actions-row">
+                    <a class="top-btn" href="/logout">Logout</a>
+                    <a class="top-btn" href="/customer_home">Home</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <div class="main">
+    <section class="banner-wrap">
+        <div class="banner">Welcome to {{ session.get('customer_name', 'Customer') }} cart</div>
+    </section>
+
+    <main class="main container">
         {% if message %}
         <div class="msg">{{ message }}</div>
         {% endif %}
 
-        <div class="box">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Size</th>
-                        <th>Final Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart_items %}
-                    <tr>
-                        <td>{{ item.product_name }}</td>
-                        <td>{{ item.category }}</td>
-                        <td>{{ item.product_size }}</td>
-                        <td>{{ item.final_price }}</td>
-                        <td>
-                            <form method="POST" action="/remove_cart_item">
-                                <input type="hidden" name="product_name" value="{{ item.product_name }}">
-                                <button type="submit" class="remove">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="total">Total cost: {{ total_price }}</div>
-            <div class="total">Coupon discount: {{ coupon_discount }}%</div>
-            <div class="total">Final price: {{ final_price }}</div>
-
-            <form method="POST" action="/apply_coupon">
-                <label>Coupon Code:</label>
-                <select name="coupon_name">
-                    <option value="">Select Coupon</option>
-                    {% for coupon in coupons %}
-                    <option value="{{ coupon.coupon_name }}" {% if applied_coupon == coupon.coupon_name %}selected{% endif %}>{{ coupon.coupon_name }} ({{ coupon.coupon_discount }}%)</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Apply Coupon</button>
-            </form>
-
-            <form method="POST" action="/place_order" style="margin-top: 10px;">
-                <button type="submit">Place Order</button>
-            </form>
+        {% if cart_items %}
+        <div class="cards">
+            {% for item in cart_items %}
+            <article class="card">
+                <div class="row"><label class="label">Product name</label><div class="value">{{ item.product_name }}</div></div>
+                <div class="row"><label class="label">Category</label><div class="value">{{ item.category }}</div></div>
+                <div class="row"><label class="label">Final_price</label><div class="value">{{ item.final_price }}</div></div>
+                <div class="row"><label class="label">Size</label><div class="value">{{ item.product_size }}</div></div>
+                <form method="POST" action="/remove_cart_item" class="remove-wrap">
+                    <input type="hidden" name="product_name" value="{{ item.product_name }}">
+                    <button class="remove-btn" type="submit">Remove</button>
+                </form>
+            </article>
+            {% endfor %}
         </div>
-    </div>
+        {% else %}
+        <div class="empty-box">Your cart is empty.</div>
+        {% endif %}
+    </main>
 
-    <div class="footer">© Copyright belongs to InfyMart</div>
+    <section class="checkout container checkout">
+        <div class="checkout-row">
+            <form method="POST" action="/apply_coupon" class="coupon-row">
+                <div class="coupon-box">
+                    <label for="coupon_name">Select Coupon</label>
+                    <select id="coupon_name" name="coupon_name">
+                        <option value=""></option>
+                        {% for coupon in coupons %}
+                        <option value="{{ coupon.coupon_name }}" {% if applied_coupon == coupon.coupon_name %}selected{% endif %}>{{ coupon.coupon_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="apply-btn" type="submit">Apply</button>
+            </form>
+
+            <div class="summary">
+                <div class="price-box">Total price: {{ final_price }}</div>
+                <form method="POST" action="/place_order">
+                    <button class="place-btn" type="submit">Place Order</button>
+                </form>
+            </div>
+        </div>
+        <div class="coupon-note">Coupon discount: {{ coupon_discount }}%</div>
+    </section>
+
+    <footer class="footer">© Copyright belongs to infyMart</footer>
 </body>
 
 </html>

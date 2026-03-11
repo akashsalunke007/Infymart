@@ -1,4 +1,4 @@
-#!/Users/mac-ASALUN25/Downloads/pyproject/.venv/bin/python
+#!/Users/mac-ASALUN25/Downloads/pyproject/.venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
