@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+            background: #0b2c6b;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .indexbtn {
+            background: white;
+            color: black;
+            padding: 6px 18px;
+            border-radius: 20px;
+            text-decoration: underline;
+            font-size: 14px;
+
+        }
+
+        .main {
+            height: 580px;
+            background: linear-gradient(to bottom, #63c1c9, #8ed8de);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .formbox {
+            width: 300px;
+        }
+
+        label {
+            background: #1f4ca3;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #777;
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .signup {
+            font-size: 14px;
+        }
+
+        button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .msg {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .footer {
+            background: #0b2c6b;
+            color: white;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .welcome {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: #b36ac7;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+        <div>InfyMart</div>
+        <a href="/" class="indexbtn">Index</a>
+    </div>
+
+    <div class="main">
+
+        <!-- <h3 style="color:white;">Welcome to customer login page of InfyMart</h3> -->
+        <div class="welcome">
+            Welcome to Customer login page of InfyMart
+        </div>
+
+        <form method="POST">
+
+            <div class="formbox">
+
+                <label>Phone Number:</label><br>
+                <input type="text" name="phone"><br>
+
+                <label>Password:</label><br>
+                <input type="password" name="password"><br>
+
+                <div>
+                    NO ACCOUNT ? <a href="/signup">Sign up</a>
+                    <button type="submit">LOGIN</button>
+                </div>
+
+                <p class="msg">{{message}}</p>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="footer">
+        © Copyright belongs to InfyMart
+    </div>
+
+</body>
+
+</html>

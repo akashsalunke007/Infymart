@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Cart</title>
+    <style>
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+        .header { background: #0b2c6b; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav a { background: white; color: black; padding: 6px 16px; border-radius: 20px; text-decoration: none; margin-left: 10px; }
+        .main { min-height: 580px; background: linear-gradient(to bottom, #63c1c9, #8ed8de); padding: 20px; }
+        .box { background: #a9dfe3; border: 2px solid #333; border-radius: 10px; padding: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+        th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+        th { background: #49afd9; }
+        .msg { color: #b00020; font-weight: bold; margin-bottom: 10px; }
+        button { background: black; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+        .remove { background: #ff6f61; color: black; }
+        .total { font-weight: bold; margin: 8px 0; }
+        .footer { background: #0b2c6b; color: white; text-align: center; padding: 8px; }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>InfyMart - Cart</div>
+        <div class="nav">
+            <a href="/customer_home">Home</a>
+            <a href="/history">History</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="main">
+        {% if message %}
+        <div class="msg">{{ message }}</div>
+        {% endif %}
+
+        <div class="box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Size</th>
+                        <th>Final Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.product_size }}</td>
+                        <td>{{ item.final_price }}</td>
+                        <td>
+                            <form method="POST" action="/remove_cart_item">
+                                <input type="hidden" name="product_name" value="{{ item.product_name }}">
+                                <button type="submit" class="remove">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="total">Total cost: {{ total_price }}</div>
+            <div class="total">Coupon discount: {{ coupon_discount }}%</div>
+            <div class="total">Final price: {{ final_price }}</div>
+
+            <form method="POST" action="/apply_coupon">
+                <label>Coupon Code:</label>
+                <select name="coupon_name">
+                    <option value="">Select Coupon</option>
+                    {% for coupon in coupons %}
+                    <option value="{{ coupon.coupon_name }}" {% if applied_coupon == coupon.coupon_name %}selected{% endif %}>{{ coupon.coupon_name }} ({{ coupon.coupon_discount }}%)</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Apply Coupon</button>
+            </form>
+
+            <form method="POST" action="/place_order" style="margin-top: 10px;">
+                <button type="submit">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">© Copyright belongs to InfyMart</div>
+</body>
+
+</html>

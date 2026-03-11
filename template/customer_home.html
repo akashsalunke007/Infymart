@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Home</title>
+    <style>
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+        .header { background: #0b2c6b; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav a { background: white; color: black; padding: 6px 16px; border-radius: 20px; text-decoration: none; margin-left: 10px; }
+        .main { min-height: 580px; background: linear-gradient(to bottom, #63c1c9, #8ed8de); padding: 20px; }
+        .welcome { background: #b36ac7; color: white; padding: 6px 15px; border-radius: 10px; display: inline-block; margin-bottom: 14px; }
+        .toolbar { background: #a9dfe3; border: 2px solid #333; border-radius: 10px; padding: 12px; margin-bottom: 16px; }
+        .toolbar select, .toolbar button { padding: 6px; border-radius: 6px; border: 1px solid #777; }
+        .toolbar button { background: black; color: white; cursor: pointer; }
+        .msg { color: #b00020; font-weight: bold; margin-bottom: 10px; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+        .card { background: #a9dfe3; border: 2px solid #333; border-radius: 10px; padding: 12px; }
+        .btn { background: #e6863b; color: black; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        .footer { background: #0b2c6b; color: white; text-align: center; padding: 8px; }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>InfyMart - Customer Home</div>
+        <div class="nav">
+            <a href="/customer_home">Home</a>
+            <a href="/cart">Cart</a>
+            <a href="/history">History</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="welcome">Welcome {{ customer_name }}</div>
+
+        {% if message %}
+        <div class="msg">{{ message }}</div>
+        {% endif %}
+
+        <div class="toolbar">
+            <form method="GET" action="/customer_home">
+                <label>Category:</label>
+                <select name="category">
+                    <option value="">All</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">View Products</button>
+            </form>
+        </div>
+
+        <div class="products">
+            {% for item in products %}
+            <div class="card">
+                <h4>{{ item.product_name }}</h4>
+                <p>Brand: {{ item.brand }}</p>
+                <p>Category: {{ item.category }}</p>
+                <p>Price: {{ item.price }}</p>
+                <p>Discount: {{ item.discount }}%</p>
+                <p>Size: {{ item.product_size }}</p>
+                <form method="POST" action="/add_to_cart">
+                    <input type="hidden" name="product_name" value="{{ item.product_name }}">
+                    <button class="btn" type="submit">Add To Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">© Copyright belongs to InfyMart</div>
+</body>
+
+</html>

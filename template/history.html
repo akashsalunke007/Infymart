@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Order History</title>
+    <style>
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+        .header { background: #0b2c6b; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav a { background: white; color: black; padding: 6px 16px; border-radius: 20px; text-decoration: none; margin-left: 10px; }
+        .main { min-height: 580px; background: linear-gradient(to bottom, #63c1c9, #8ed8de); padding: 20px; }
+        .box { background: #a9dfe3; border: 2px solid #333; border-radius: 10px; padding: 14px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+        th { background: #49afd9; }
+        .msg { color: #b00020; font-weight: bold; margin-bottom: 10px; }
+        .footer { background: #0b2c6b; color: white; text-align: center; padding: 8px; }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>InfyMart - Order History</div>
+        <div class="nav">
+            <a href="/customer_home">Home</a>
+            <a href="/cart">Cart</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="main">
+        {% if message %}
+        <div class="msg">{{ message }}</div>
+        {% endif %}
+
+        <div class="box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in orders %}
+                    <tr>
+                        <td>{{ item.order_id }}</td>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.order_count }}</td>
+                        <td>{{ item.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">© Copyright belongs to InfyMart</div>
+</body>
+
+</html>

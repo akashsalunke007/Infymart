@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Registration</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #0b2c6b;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbtn {
+            background: white;
+            color: black;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        /* MAIN */
+
+        .main {
+            height: 580px;
+            background: linear-gradient(to bottom, #63c1c9, #8ed8de);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* PURPLE LABEL */
+
+        .welcome {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #b36ac7;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        /* FORM BOX */
+
+        .formbox {
+            background: #a9dfe3;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #333;
+            width: 300px;
+        }
+
+        .formbox label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .formbox input,
+        .formbox select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+        }
+
+        /* BUTTONS */
+
+        .btns {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .register {
+            background: green;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .reset {
+            background: #ff6f61;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 6px;
+        }
+
+        /* FOOTER */
+
+        .msg {
+            margin-top: 12px;
+            text-align: center;
+            color: #b00020;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #0b2c6b;
+            color: white;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+        <div>InfyMart</div>
+
+        <div>
+            <a href="/" class="topbtn">Index</a>
+            <a href="/customer_login" class="topbtn">Login</a>
+        </div>
+
+    </div>
+
+    <div class="main">
+
+        <div class="welcome">
+            Welcome to Customer registration page of InfyMart
+        </div>
+
+        <form method="POST" action="/signup">
+
+            <div class="formbox">
+
+                <label>Phone Number</label>
+                <input type="text" name="phone">
+
+                <label>User Name</label>
+                <input type="text" name="username">
+
+                <label>City</label>
+                <select name="city">
+                    <option>Select City</option>
+                    <option>Delhi</option>
+                    <option>Hyderabad</option>
+                    <option>Mumbai</option>
+                    <option>Kolkata</option>
+                    <option>Bangalore</option>
+                </select>
+
+                <label>Password</label>
+                <input type="password" name="password">
+
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password">
+
+                <div class="btns">
+                    <button class="register">Register</button>
+                    <button type="reset" class="reset">Reset</button>
+                </div>
+
+                <p class="msg">{{message}}</p>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="footer">
+        © Copyright belongs to InfyMart
+    </div>
+
+</body>
+
+</html>
